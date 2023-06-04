@@ -9,14 +9,20 @@ class NumOnlyErr(Exception):
 
 
 new_list = []
-for _ in range(5):
+while True:
     try:
-        new_item = input('Введите число в список:')
-        new_item = float(new_item)
-        new_list.append(new_item)
-    except ValueError:
-        raise NumOnlyErr('Введенное значание не является числом')
+        new_item = input('Введите число в список или stop для завершения:')
+        if new_item == "stop":
+            print(f"обновленный список {new_list}")
+            break
+        else:
+            if not new_item.isdigit():
+                raise NumOnlyErr(f"'{new_item}' имеет неверный формат")
+
+            new_item = int(new_item)
+            new_list.append(new_item)
+
+    except NumOnlyErr as err:
+        print(err)
     else:
         print(new_list)
-# Я верно понимаю, что должна выпадать ошибка и прерываться программа, или наоборот, нам нужен вариант,
-# когда  при неверно заполнениии мы бы вывели предупреждение и продолжили работу.
